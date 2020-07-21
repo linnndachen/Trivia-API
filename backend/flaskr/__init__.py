@@ -181,8 +181,8 @@ def create_app(test_config=None):
       search_term = data['searchTerm']
 
     related_questions = Question.query.filter(Question.question.ilike('%{}%'.format(search_term))).all()
-      
-    if len(related_questions)==0:
+    
+    if related_questions==[]:
       abort(404)
 
     output = paginate_questions(request, related_questions)
@@ -293,7 +293,7 @@ def create_app(test_config=None):
       'success': False,
       'error': 404,
       'message': 'Resource not found. Input out of range.'
-    })
+    }), 404
 
   @app.errorhandler(422)
   def unprocessable(error):
@@ -301,7 +301,7 @@ def create_app(test_config=None):
       'success': False,
       'error': 422, 
       'message': 'unprocessable. Synax error.'
-    })
+    }), 422
 
   @app.errorhandler(500)
   def internal_server(error):
@@ -309,7 +309,7 @@ def create_app(test_config=None):
       'success': False,
       'error': 500, 
       'message': 'Sorry, the falut is us not you. Please try again later.'
-    })
+    }), 500
 
   return app
 
