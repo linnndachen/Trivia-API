@@ -1,6 +1,6 @@
 # Full Stack API Final Project
 
-## Full Stack Trivia
+## Project Description
 Trivia app is a web application that allow people to play trivia and seeing who's the most knowledgeable of the bunch. The application is able to:
 
 1) Display questions - both all questions and by category. Questions should show the question, category and difficulty rating by default and can show/hide the answer.
