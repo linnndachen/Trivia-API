@@ -57,12 +57,12 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], False)
     
     def test_delete_questions(self):
-        res = self.client().delete('questions/4')
+        res = self.client().delete('questions/11')
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['deleted'], 4)
+        self.assertEqual(data['deleted'], 11)
 
     def search_question(self):
         res = self.client().post('questions/search', json={"searchTerm": "title"})
@@ -120,8 +120,8 @@ class TriviaTestCase(unittest.TestCase):
         input_data = {
             'previous_questions':[2, 6],
             'quiz_category': {
-                'id': 0,
-                'type': 'All'
+                'id': 5,
+                'type': 'Entertainment'
             }
         }
 
@@ -135,7 +135,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertNotEqual(data['question']['id'], 2)
         self.assertNotEqual(data['question']['id'], 6)
 
-        #self.assertEqual(data['question']['category'], 0)
+        self.assertEqual(data['question']['category'], 5)
 
 
 # Make the tests conveniently executable
