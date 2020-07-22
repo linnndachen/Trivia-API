@@ -88,9 +88,8 @@ python test_flaskr.py
 ## API Reference
 
 ### Getting Started
-- Backend Base URL: 
-- Frontend Base URL:
-- Authentication: 
+- Backend Base URL: http://127.0.0.1:5000/
+- Frontend Base URL: http://127.0.0.1:3000/
 
 ### Error Handling
 Errors are returned in the following json format:
@@ -109,14 +108,195 @@ The API returns 4 types of errors:
 
 ### Endpoints
 
-#### GET '/categories'
-#### GET '/questions'
-#### DELETE '/questions/int:id'
-#### POST '/questions'
-#### POST '/questions/search'
-#### GET '/categories/int:id/questions'
-#### POST '/quizzes'
+##### GET '/categories'
+- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+- Example: ```curl http://127.0.0.1:5000/categories```
+```
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "success": true
+}
+```
+##### GET '/questions'
+- Fetches all the questions in the database. The questions are paginated with 10 questions each page.
+- Example: ```curl http://127.0.0.1:5000/questions```
+```
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "questions": [
+    {
+      "answer": "Maya Angelou", 
+      "category": 4, 
+      "difficulty": 2, 
+      "id": 5, 
+      "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+    }, 
+    {
+      "answer": "Muhammad Ali", 
+      "category": 4, 
+      "difficulty": 1, 
+      "id": 9, 
+      "question": "What boxer's original name is Cassius Clay?"
+    }, 
+    {
+      "answer": "Apollo 13", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 2, 
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    }, 
+    {
+      "answer": "Tom Cruise", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 4, 
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    }, 
+    {
+      "answer": "Edward Scissorhands", 
+      "category": 5, 
+      "difficulty": 3, 
+      "id": 6, 
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    }, 
+    {
+      "answer": "Brazil", 
+      "category": 6, 
+      "difficulty": 3, 
+      "id": 10, 
+      "question": "Which is the only team to play in every soccer World Cup tournament?"
+    }, 
+    {
+      "answer": "Uruguay", 
+      "category": 6, 
+      "difficulty": 4, 
+      "id": 11, 
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    }, 
+    {
+      "answer": "George Washington Carver", 
+      "category": 4, 
+      "difficulty": 2, 
+      "id": 12, 
+      "question": "Who invented Peanut Butter?"
+    }, 
+    {
+      "answer": "Lake Victoria", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 13, 
+      "question": "What is the largest lake in Africa?"
+    }, 
+    {
+      "answer": "The Palace of Versailles", 
+      "category": 3, 
+      "difficulty": 3, 
+      "id": 14, 
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 19
+}
+```
+##### DELETE '/questions/int:id'
+- Delete the question that was specified by its id in the url parameter.
+- Example: ```curl -X DELETE http://127.0.0.1:5000/questions/5```
+```
+{
+    "success": "True",
+    "deleted": 5
+}
+```
 
+##### POST '/questions'
+- Create a new question. The new question must have all four information. 
+- Example: ```curl -X POST - H "Content-Type: application/json" -d '{"question": "Who is Donald Trump?", "answer": "the current president of US", "difficulty": 1, "category": "5"}' http://127.0.0.1:5000/questions```
+```
+{
+  "success": true
+  "created": 19
+  "total_questions": 19
+}
+```
+
+##### POST '/questions/search'
+- User type in a string to search for a question and it will return all the questions that contain this string. 
+- Example: ```curl -X POST -H "Content-Type: application/json" -d '{"searchTerm": "peanut butter"}' http://127.0.0.1:5000/questions/search```
+
+```
+{
+  "questions": [
+    {
+      "answer": "George Washington Carver", 
+      "category": 4, 
+      "difficulty": 2, 
+      "id": 12, 
+      "question": "Who invented Peanut Butter?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 1
+}
+```
+
+##### GET '/categories/int:id/questions'
+- Get questions only in a specific category
+- Example: ```curl http://127.0.0.1:5000/categories/2/questions```
+
+```
+{
+  "current_category": "Art", 
+  "questions": [
+    {
+      "answer": "Escher", 
+      "category": 2, 
+      "difficulty": 1, 
+      "id": 16, 
+      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+    }, 
+    {
+      "answer": "Mona Lisa", 
+      "category": 2, 
+      "difficulty": 3, 
+      "id": 17, 
+      "question": "La Giaconda is better known as what?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 2
+}
+```
+
+##### POST '/quizzes'
+- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+- Example: ```curl -X POST -H "Content-Type: application/json" -d '{"previous_questions": [2, 6], "quiz_category": {"type": "Entertainment", "id": "5"}}' http://127.0.0.1:5000/quizzes```
+```
+{
+  "question": {
+    "answer": "Tom Cruise", 
+    "category": 5, 
+    "difficulty": 4, 
+    "id": 4, 
+    "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+  }, 
+  "success": true
+}
+```
 ## Author and Acknowledgement
-- Linda Chen contributed to API(__init.py__), test file(test_flaskr.py) and this ReadMe file. 
+- Linda Chen contributed to API(```__init.py__```), test file(```test_flaskr.py```) and this ReadMe file. 
 - The project and other files are credicted to [Udacity](https://www.udacity.com/)
