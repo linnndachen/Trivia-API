@@ -7,7 +7,9 @@ Trivia app is a web application that allow people to play trivia and seeing who'
 2) Delete questions.
 3) Add questions and require that they include question and answer text.
 4) Search for questions based on a text query string.
-5) Play the quiz game, randomizing either all questions or within a specific category. 
+5) Play the quiz game, randomizing either all questions or within a specific category.
+
+Follow the instructions below to get started! Also check out my [blog](https://towardsdatascience.com/reflection-on-my-first-api-project-67d6cee31ce4?source=friends_link&sk=601fe90519dba868771830c22dfe39cb) to see my reflection and takeaways from compeleting this project!
 
 ## Getting Started
 
